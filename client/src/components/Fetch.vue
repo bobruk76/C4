@@ -7,7 +7,7 @@
 <script>
 import axios from 'axios';
 
-const dataURL = ' https://api.jsonbin.io/b/5e90e8278e85c84370140777';
+const dataURL = 'https://api.myjson.com/bins/10dxnx';
 
 export default {
   name: 'Fetch',
@@ -22,11 +22,16 @@ export default {
         .then((response) => {
           // console.log(response);
           this.msg = response.data.message;
-         });
+        });
     },
   },
   created() {
-    this.getMessage();
+    // this.getMessage();
+    axios.get(dataURL)
+      .then((response) => {
+        // console.log(response);
+        this.msg = response.data.message;
+      });
   },
 };
 </script>

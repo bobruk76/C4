@@ -12,6 +12,6 @@ export default new Router({
       path: '/fetch',
       name: 'fetch',
       component: Fetch,
-    }
+    },
   ],
 });
