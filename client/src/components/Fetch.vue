@@ -7,7 +7,7 @@
 <script>
 import axios from 'axios';
 
-const dataURL = 'https://api.myjson.com/bins/10dxnx';
+const dataURL = 'https://api.jsonbin.io/b/5e90e8278e85c84370140777';
 
 export default {
   name: 'Fetch',
