@@ -1,3 +1,4 @@
 {
-    "git.ignoreLimitWarning": true
+    "git.ignoreLimitWarning": true,
+    "python.pythonPath": "c:\\skillfactory.ru\\C4\\venv\\Scripts\\python.exe"
 }
