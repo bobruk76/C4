@@ -33,7 +33,7 @@ export default {
         is_completed: this.addTodoForm.is_completed[0],
       };
       console.log(requestData);
-      
+
       axios.post(todoAddURL, requestData)
         .then(() => {
           this.getTodos();
