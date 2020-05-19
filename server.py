@@ -48,15 +48,17 @@ def add_task():
             tasks_db[new_uid] = t
         return "OK"
 
-@app.route("/api/add-task", method="POST")
+@enable_cors
+@app.post("/api/add-task/")
 def add_task():
     desc = bottle.request.POST.description.strip()
     if len(desc) > 0:
         new_uid = max(tasks_db.keys()) + 1
         t = TodoItem(desc, new_uid)
         tasks_db[new_uid] = t
-    return "OK"
+    return "{'result':OK, 'desc':{}'}".format(desc)
 
+@enable_cors
 @app.route("/api/delete/<uid:int>")
 def api_delete(uid):
     tasks_db.pop(uid)
