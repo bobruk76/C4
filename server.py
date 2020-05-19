@@ -18,7 +18,6 @@ class TodoItem:
             "uid": self.uid
         }
 
-
 tasks_db = {
     uid: TodoItem(desc, uid)
     for uid, desc in enumerate(
@@ -49,6 +48,21 @@ def add_task():
         return "OK"
 
 @enable_cors
+@app.route("/api/tasks/<uid:int>", method=["GET", "PUT", "DELETE"])
+def show_or_modify_task(uid):
+    if bottle.request.method == "GET":
+        return tasks_db[uid].to_dict()
+    elif bottle.request.method == "PUT":
+        if "description" in bottle.request.json:
+            tasks_db[uid].description = bottle.request.json['description']
+        if "is_completed" in bottle.request.json:
+            tasks_db[uid].is_completed = bottle.request.json['is_completed']
+        return f"Modified task {uid}"
+    elif bottle.request.method == "DELETE":
+        tasks_db.pop(uid)
+        return f"Deleted task {uid}"
+
+@enable_cors
 @app.post("/api/add-task/")
 def add_task():
     desc = bottle.request.json['description']
@@ -73,7 +87,6 @@ def api_delete(uid):
 def api_complete(uid):
     tasks_db[uid].is_completed = True
     return "Ok"
-
 
 app.install(CorsPlugin(origins=['http://localhost:8000']))
 

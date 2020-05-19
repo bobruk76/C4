@@ -2,6 +2,10 @@
   <div class="container">
     <div class="col-sm-10">
       <h1>Задачи</h1>
+      <confirmation
+        :message="confirmationMessage"
+        v-if="showConfirmation">
+      </confirmation>
       <button type="button" id="task-add" class="btn btn-success btn-sm align-left d-block" v-b-modal.todo-modal>Добавить задачу</button>
 
       <table class="table table-dark table-stripped table-hover">
@@ -24,9 +28,18 @@
             </td>
             <td>
               <div class="btn-group" role="group">
-                <button type="button" class="btn btn-secondary btn-sm">Обновить</button>
+                    <button type="button"
+                        class="btn btn-secondary btn-sm"
+                        v-b-modal.todo-update-modal
+                        @click="updateTodo(todo)">
+                    Обновить
+                </button>
                 &nbsp;
-                <button type="button" class="btn btn-danger btn-sm">X</button>
+                <button type="button"
+                        class="btn btn-danger btn-sm"
+                        @click="deleteTodo(todo)">
+                  X
+                </button>
               </div>
             </td>
           </tr>
@@ -59,6 +72,32 @@
       </b-form>
     </b-modal>
 
+
+    <b-modal ref="updateTodoModal"
+            id="todo-update-modal"
+            title="Update"
+            hide-footer>
+      <b-form @submit="onUpdateSubmit" @reset="onUpdateReset" class="w-100">
+      <b-form-group id="form-update-description-group"
+                    label="Описание:"
+                    label-for="form-update-description-input">
+        <b-form-input id="form-update-description-input"
+                      type="text"
+                      v-model="updateTodoForm.description"
+                      required>
+        </b-form-input>
+      </b-form-group>
+      <b-form-group id="form-update-complete-group">
+        <b-form-checkbox-group v-model="updateTodoForm.is_completed" id="form-update-checks">
+          <b-form-checkbox value="true">Задача выполнена?</b-form-checkbox>
+        </b-form-checkbox-group>
+      </b-form-group>
+      <b-button-group>
+        <b-button type="submit" variant="primary">Обновить</b-button>
+        <b-button type="reset" variant="danger">Сброс</b-button>
+      </b-button-group>
+      </b-form>
+    </b-modal>
 
     </div>
   </div>
